@@ -1,7 +1,6 @@
 const db = require("../models");
 const Task = db.tasks;
 
-// Create and Save a new Task
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.todo) {
@@ -9,12 +8,10 @@ exports.create = (req, res) => {
         return;
     }
 
-    // Create a Task
     const task = new Task({
         todo: req.body.todo
     });
 
-    // Save Task in the database
     task
         .save(task)
         .then(data => {
@@ -28,7 +25,6 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve all Tasks from the database.
 exports.findAll = (req, res) => {
     const title = req.query.title;
     var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
@@ -45,7 +41,6 @@ exports.findAll = (req, res) => {
         });
 };
 
-// Find a single Task with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -62,7 +57,6 @@ exports.findOne = (req, res) => {
         });
 };
 
-// Update a Task by the id in the request
 exports.update = (req, res) => {
     if (!req.body) {
         return res.status(400).send({
@@ -87,7 +81,6 @@ exports.update = (req, res) => {
         });
 };
 
-// Delete a Task with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -110,7 +103,6 @@ exports.delete = (req, res) => {
         });
 };
 
-// Delete all Tasks from the database.
 exports.deleteAll = (req, res) => {
     Task.deleteMany({})
         .then(data => {
